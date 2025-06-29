@@ -29,24 +29,42 @@ A simple Java-based web application using Vert.x, MongoDB, and SMTP to manage el
 
 ## 📁 Folder Structure
 
-elective-registration/
+elective/
+
 ├── src/
+
 │ ├── main/
+
 │ │ ├── java/
+
 │ │ │ └── org/example/
+
 │ │ │ ├── Main.java
+
 │ │ │ ├── handlers/
+
 │ │ │ │ ├── AuthHandler.java
+
 │ │ │ │ ├── CourseHandler.java
+
 │ │ │ │ └── RegistrationHandler.java
+
 │ │ │ └── util/
+
 │ │ │ └── EmailUtil.java
+
 │ │ └── resources/
+
 │ │ └── webroot/
+
 │ │ ├── index.html
+
 │ │ ├── login.html
+
 │ │ └── register-course.html
+
 ├── pom.xml
+
 └── README.md
 
 OUTPUT
