@@ -1,5 +1,6 @@
 package org.example;
 
+import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
@@ -25,8 +26,12 @@ public class Main extends AbstractVerticle {
         Router router = Router.router(vertx);
         router.route().handler(BodyHandler.create());
 
+
         new CourseHandler(mongo).setup(router);
         new RegistrationHandler(vertx, mongo).setup(router);
+        System.out.println("Serving static files from: " + System.getProperty("user.dir") + "/src/main/resources/webroot");
+
+        router.route("/*").handler(StaticHandler.create("webroot"));
 
 
         vertx.createHttpServer()

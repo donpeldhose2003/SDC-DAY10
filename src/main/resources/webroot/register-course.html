@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register for Course</title>
+</head>
+<body>
+<h2>Register for a Course</h2>
+
+<form id="courseForm">
+    Email: <input type="email" id="email" required><br><br>
+
+    <div id="courseList">Loading courses...</div><br>
+
+    <button type="submit">Register</button>
+</form>
+
+<p id="responseMessage"></p>
+
+<script>
+    // Fetch and show course list
+    async function loadCourses() {
+      const res = await fetch('/courses');
+      const courses = await res.json();
+      const container = document.getElementById('courseList');
+      container.innerHTML = ''; // Clear "Loading..." text
+
+      courses.forEach(course => {
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'courseId';
+        radio.value = course._id;
+        radio.required = true;
+
+        const label = document.createElement('label');
+        label.textContent = course.name;
+
+        container.appendChild(radio);
+        container.appendChild(label);
+        container.appendChild(document.createElement('br'));
+      });
+    }
+
+    document.getElementById('courseForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const courseId = document.querySelector('input[name="courseId"]:checked').value;
+
+      const response = await fetch('/register-course', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email, courseId })
+      });
+
+      const text = await response.text();
+      document.getElementById('responseMessage').textContent = text;
+    });
+
+    loadCourses(); // Load on page load
+</script>
+</body>
+
+</html>

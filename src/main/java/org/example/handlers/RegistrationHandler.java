@@ -23,6 +23,7 @@ public class RegistrationHandler {
         router.post("/register-student").handler(this::registerStudent);
         router.post("/login").handler(this::login);
         router.post("/register-course").handler(this::registerCourse);
+
     }
 
     private void registerStudent(RoutingContext ctx) {
@@ -103,7 +104,8 @@ public class RegistrationHandler {
                                 if (updateRes.succeeded()) {
                                     // Decrease seat
                                     mongo.updateCollection("courses",
-                                            new JsonObject().put("_id", courseId),
+                                            new JsonObject().put("_id", courseId)
+                                            ,
                                             new JsonObject().put("$inc", new JsonObject().put("capacity", -1)),
                                             courseUpdate -> {
                                                 if (courseUpdate.succeeded()) {
